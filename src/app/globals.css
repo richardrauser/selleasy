@@ -1,12 +1,25 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f9fafb;
+  --foreground: #1f2937;
+  --primary: #FF4D4D;
+  --primary-hover: #ff3333;
+  --secondary: #4D4DFF;
+  --accent: #FFB347;
+  --white: #ffffff;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #111827;
+    --foreground: #f9fafb;
+    --primary: #FF6666;
+    /* Slightly lighter for dark mode */
+    --primary-hover: #ff4d4d;
+    --secondary: #6666FF;
+    --gray-100: #1f2937;
+    --gray-200: #374151;
   }
 }
 
@@ -33,10 +46,4 @@ body {
 a {
   color: inherit;
   text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
 }
