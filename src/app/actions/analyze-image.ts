@@ -12,9 +12,8 @@ export async function analyzeImage(imageBase64: string, mimeType: string) {
     }
 
     try {
-        // trying gemini-3.0-pro but "Gemini 3 pro" may not yet be standard/released publicly via this SDK.
-        // Downgrade to gemini-1.5-pro is the latest capable vision model.
-        const model = genAI.getGenerativeModel({ model: "gemini-3.0-pro" });
+        // Using gemini-3-pro-preview as the latest available model.
+        const model = genAI.getGenerativeModel({ model: "gemini-3-pro-preview" });
 
         const prompt = "Describe the item in this photo in detail, suitable for a sales listing. Focus on condition, brand, color, and key features.";
 

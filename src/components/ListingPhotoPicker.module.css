@@ -16,9 +16,13 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    /* Handle smaller screens */
 }
 
-.cameraButton {
+.cameraButton,
+.webcamButton {
     background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
     color: white;
     border: none;
@@ -34,13 +38,32 @@
     box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
 }
 
-.cameraButton:hover {
+.webcamButton {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.cameraButton:hover,
+.webcamButton:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4);
 }
 
-.cameraButton:active {
+.webcamButton:hover {
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+}
+
+.cameraButton:active,
+.webcamButton:active {
     transform: translateY(0);
+}
+
+.cameraButton:disabled,
+.webcamButton:disabled {
+    background: #cbd5e1;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }
 
 .previewContainer {
@@ -60,6 +83,57 @@
     height: auto;
     display: block;
 }
+
+.videoFeed {
+    width: 100%;
+    height: auto;
+    display: block;
+    transform: scaleX(-1);
+    /* Mirror effect is usually expected for self-view, though for items standard might be better. Let's stick effectively standard or mirrored? front cam is usually mirrored. Back cam is standard. Let's assume user preference but CSS transform specific to selfie mode. For items, maybe no mirror. */
+}
+
+/* Overlay controls for the active camera view */
+.cameraOverlay {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    z-index: 10;
+}
+
+.captureBtn,
+.cancelBtn {
+    padding: 0.8rem 1.5rem;
+    border-radius: 40px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.captureBtn {
+    background-color: white;
+    color: #4f46e5;
+    border: 2px solid #4f46e5;
+}
+
+.captureBtn:hover {
+    background-color: #f0fdf4;
+}
+
+.cancelBtn {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    backdrop-filter: blur(4px);
+}
+
+.cancelBtn:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
 
 .loading {
     display: flex;
