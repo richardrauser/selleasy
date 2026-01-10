@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
+import Navbar from "@/components/Navbar";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -20,6 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={outfit.className} suppressHydrationWarning>
+        <Navbar />
         {children}
       </body>
     </html>
