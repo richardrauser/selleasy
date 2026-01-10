@@ -12,7 +12,6 @@ export default function NewListingPage() {
 
                 <ListingPhotoPicker />
 
-                {/* Future form fields can go here */}
             </div>
         </main>
     );

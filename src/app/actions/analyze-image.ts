@@ -2,7 +2,6 @@
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-
 export async function analyzeImage(imageBase64: string, mimeType: string) {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
@@ -11,7 +10,6 @@ export async function analyzeImage(imageBase64: string, mimeType: string) {
     }
 
     try {
-        // Using gemini-3-pro-preview as the latest available model.
         const genAI = new GoogleGenerativeAI(apiKey);
         const model = genAI.getGenerativeModel({ model: "gemini-3-pro-preview" });
 
