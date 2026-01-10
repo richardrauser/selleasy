@@ -1,5 +1,10 @@
-import ListingPhotoPicker from '@/components/ListingPhotoPicker';
+import dynamic from 'next/dynamic';
 import styles from './page.module.css';
+
+const ListingPhotoPicker = dynamic(() => import('@/components/ListingPhotoPicker'), {
+    ssr: false,
+    loading: () => <div className={styles.loadingPlaceholder}>Loading camera...</div>
+});
 
 export default function NewListingPage() {
     return (
