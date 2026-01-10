@@ -2,10 +2,9 @@
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const apiKey = process.env.GEMINI_API_KEY;
-const genAI = new GoogleGenerativeAI(apiKey || "");
 
 export async function analyzeImage(imageBase64: string, mimeType: string) {
+    const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
         console.error("GEMINI_API_KEY is not set in environment variables.");
         return { success: false, error: "Server configuration error: API key missing." };
@@ -13,6 +12,7 @@ export async function analyzeImage(imageBase64: string, mimeType: string) {
 
     try {
         // Using gemini-3-pro-preview as the latest available model.
+        const genAI = new GoogleGenerativeAI(apiKey);
         const model = genAI.getGenerativeModel({ model: "gemini-3-pro-preview" });
 
         const prompt = "Describe the item in this photo in detail, suitable for a sales listing. Focus on condition, brand, color, and key features.";
