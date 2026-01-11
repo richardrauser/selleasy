@@ -10,6 +10,9 @@ export default function ListingPhotoPicker() {
     const [loading, setLoading] = useState(false);
     const [isCameraOpen, setIsCameraOpen] = useState(false);
     const [cameraError, setCameraError] = useState<string | null>(null);
+    const [items, setItems] = useState<any[]>([]);
+    const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
+    const [showAllItems, setShowAllItems] = useState(false);
 
     const fileInputRef = useRef<HTMLInputElement>(null);
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -100,17 +103,35 @@ export default function ListingPhotoPicker() {
 
     const analyzePhoto = async (base64: string, mimeType: string) => {
         setLoading(true);
-        // setDescription(''); needs to be separate if called from capturePhoto? keeping it consistent.
+        setItems([]);
+        setSelectedItemId(null);
 
         const result = await analyzeImage(base64, mimeType);
 
-        if (result.success && result.description) {
-            setDescription(result.description);
+        if (result.success && result.data) {
+            setItems(result.data.items || []);
+
+            // Auto-select the first item if available
+            if (result.data.items && result.data.items.length > 0) {
+                setSelectedItemId(result.data.items[0].id);
+            }
         } else {
-            setDescription(result.error || "Failed to generate description.");
+            console.error(result.error || "Failed to analyze image.");
+            // Optionally set an error state here
         }
         setLoading(false);
     };
+
+    const handleItemSelect = (itemId: string) => {
+        setSelectedItemId(itemId);
+        // Ideally we might want to re-focus the description on this specific item, 
+        // but for this iteration we'll just track the selection. 
+        // In a real app we might re-prompt Gemini to describe THIS specific item if the initial description was generic, 
+        // or if the initial listingDetails object only covered the top item.
+        // For now, let's assume the user just wants to tag it.
+    };
+
+    const selectedItem = items.find(item => item.id === selectedItemId);
 
     return (
         <div className={styles.container}>
@@ -189,10 +210,54 @@ export default function ListingPhotoPicker() {
                 </div>
             )}
 
-            {description && !loading && !isCameraOpen && (
+            {items.length > 0 && !loading && !isCameraOpen && (
+                <div className={styles.itemSelectionContainer}>
+                    <h3 className={styles.selectionTitle}>The item I wish to sell is:</h3>
+                    <div className={styles.itemGraph}>
+                        {items.slice(0, showAllItems ? undefined : 3).map((item) => (
+                            <label
+                                key={item.id}
+                                className={`${styles.itemOption} ${selectedItemId === item.id ? styles.selected : ''}`}
+                            >
+                                <input
+                                    type="radio"
+                                    name="selectedItem"
+                                    value={item.id}
+                                    checked={selectedItemId === item.id}
+                                    onChange={() => handleItemSelect(item.id)}
+                                />
+                                <span className={styles.itemName}>{item.name}</span>
+                                <span className={styles.confidenceScore}>
+                                    {(item.confidence * 100).toFixed(0)}% Match
+                                </span>
+                            </label>
+                        ))}
+                    </div>
+                    {items.length > 3 && (
+                        <button
+                            type="button"
+                            onClick={() => setShowAllItems(!showAllItems)}
+                            className={styles.showMoreBtn}
+                            aria-label={showAllItems ? "Show less items" : "Show more items"}
+                        >
+                            {showAllItems ? (
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M18 15L12 9L6 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                            ) : (
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                            )}
+                        </button>
+                    )}
+                </div>
+            )}
+
+            {selectedItem && !loading && !isCameraOpen && (
                 <div className={styles.descriptionContainer}>
-                    <h3>Analysis Result</h3>
-                    <p>{description}</p>
+                    <h3>{selectedItem.title}</h3>
+                    <p>{selectedItem.description}</p>
                 </div>
             )}
         </div>
