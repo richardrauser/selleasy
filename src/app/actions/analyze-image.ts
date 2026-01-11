@@ -2,6 +2,12 @@
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
+const GEMINI_MODELS = {
+    PRO: "gemini-3-pro-preview",
+    FLASH: "gemini-3-flash-preview"
+}
+
+
 export async function analyzeImage(imageBase64: string, mimeType: string) {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
@@ -11,12 +17,28 @@ export async function analyzeImage(imageBase64: string, mimeType: string) {
 
     try {
         const genAI = new GoogleGenerativeAI(apiKey);
-        const model = genAI.getGenerativeModel({ model: "gemini-3-pro-preview" });
+        const model = genAI.getGenerativeModel({ model: GEMINI_MODELS.FLASH });
 
-        const prompt = "Describe the item in this photo in detail, suitable for a sales listing. Focus on condition, brand, color, and key features.";
+        const prompt = `
+        Analyze the image and identify the distinct items present.
+        Return a JSON object with the following structure:
+        {
+            "items": [
+                {
+                    "id": "1",
+                    "name": "Short item name",
+                    "confidence": 0.95,
+                    "title": "Suggested Title for this item",
+                    "description": "Detailed description for this specific item, suitable for a sales listing."
+                },
+                ...
+            ]
+        }
+        Order the "items" array from highest confidence (probability of being the main subject) to lowest.
+        Ensure the response is valid JSON without any markdown formatting.
+        `;
 
-        // imageBase64 might come with "data:image/jpeg;base64," prefix.
-        // robustly handle it:
+        // base64 definition was removed in previous step, adding it back
         const base64Data = imageBase64.includes('base64,')
             ? imageBase64.split('base64,')[1]
             : imageBase64;
@@ -30,9 +52,18 @@ export async function analyzeImage(imageBase64: string, mimeType: string) {
 
         const result = await model.generateContent([prompt, imagePart]);
         const response = await result.response;
-        const text = response.text();
+        let text = response.text();
 
-        return { success: true, description: text };
+        // Clean up markdown code blocks if present
+        text = text.replace(/```json/g, '').replace(/```/g, '').trim();
+
+        try {
+            const data = JSON.parse(text);
+            return { success: true, data: data };
+        } catch (e) {
+            console.error("Error parsing JSON:", e);
+            return { success: false, error: "Failed to parse analysis result." };
+        }
     } catch (error) {
         console.error("Error analyzing image:", error);
         return { success: false, error: "Failed to analyze image." };
