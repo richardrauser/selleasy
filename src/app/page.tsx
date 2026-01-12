@@ -16,7 +16,7 @@ export default function Home() {
           />
         </div>
         <h1 className={styles.title}>
-          Get your old shit sold, <span style={{ color: "var(--secondary)" }}>TODAY!</span>
+          Get your old stuff sold, <span style={{ color: "var(--secondary)" }}>TODAY!</span>
         </h1>
         <p className={styles.description}>
           The easiest way to declutter your life and make money.

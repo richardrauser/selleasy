@@ -258,3 +258,14 @@
     transform: translateY(2px);
     text-decoration: none;
 }
+
+.suggestedPrice {
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #059669;
+    /* Green color for money/price */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}

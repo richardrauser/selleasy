@@ -10,7 +10,7 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
   title: "SellEasy",
-  description: "Get your old shit sold, TODAY!",
+  description: "Get your stuff sold, TODAY!",
 };
 
 export default function RootLayout({
