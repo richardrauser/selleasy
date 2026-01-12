@@ -22,6 +22,7 @@ export async function analyzeImage(imageBase64: string, mimeType: string) {
                     "confidence": 0.95,
                     "title": "Suggested Title for this item",
                     "description": "Detailed description for this specific item, suitable for a sales listing.",
+                    "quality": "Assessment of item condition (e.g. New, Good, Fair)",
                     "suggestedPrice": "Suggested resale price (e.g. $50 - $75)"
                 },
                 ...

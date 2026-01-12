@@ -170,31 +170,9 @@
 .descriptionContainer h3 {
     margin-top: 0;
     margin-bottom: 0.75rem;
-    font-size: 1.25rem;
+    font-size: 1.0rem;
     color: #111827;
     font-weight: 700;
-}
-
-.descriptionInput {
-    width: 100%;
-    min-height: 100px;
-    padding: 0.75rem;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    font-family: inherit;
-    /* Use the same font as the rest of the app */
-    font-size: 1rem;
-    line-height: 1.6;
-    color: #374151;
-    resize: vertical;
-    margin-bottom: 1rem;
-    transition: border-color 0.2s;
-}
-
-.descriptionInput:focus {
-    outline: none;
-    border-color: #4f46e5;
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
 }
 
 /* Edit mode and action buttons */
@@ -204,14 +182,111 @@
     /* Make room for the pencil icon */
 }
 
-/* When in edit mode, we might want less padding or different layout, but standard is fine */
+.editForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.titleInput,
+.qualityInput,
+.descriptionInput {
+    width: calc(100% - 0.5rem);
+    margin-left: 0.5rem;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: normal;
+    color: #111827;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.descriptionInput {
+    line-height: 1.6;
+    min-height: 100px;
+    resize: vertical;
+}
+
+.titleInput:focus,
+.qualityInput:focus,
+.descriptionInput:focus {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.qualityInput {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+}
+
+.readOnlyContent {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.readOnlyField {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.itemTitle {
+    margin: 0;
+    margin-left: 0.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #111827;
+}
 
 .descriptionParagraph {
     line-height: 1.6;
     color: #374151;
     white-space: pre-wrap;
     margin: 0;
+    margin-left: 0.5rem;
+    font-size: 1rem;
 }
+
+.qualityValue {
+    font-size: 1rem;
+    color: #111827;
+    margin: 0;
+    margin-left: 0.5rem;
+}
+
+.descriptionInput:focus {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* Edit mode and action buttons */
+
 
 .editButton {
     position: absolute;

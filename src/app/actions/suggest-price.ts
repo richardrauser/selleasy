@@ -2,7 +2,7 @@
 
 import { getGeminiModel, GEMINI_MODELS } from "@/lib/gemini";
 
-export async function suggestPriceFromDescription(description: string) {
+export async function suggestPriceFromDescription(item: string, description: string, quality: string) {
     const model = getGeminiModel();
 
     if (!model) {
@@ -12,8 +12,10 @@ export async function suggestPriceFromDescription(description: string) {
     try {
 
         const prompt = `
-        Based on the following product description, suggest a reasonable resale price range.
+        Based on the following product details, suggest a reasonable resale price range.
+        Item: "${item}"
         Description: "${description}"
+        Quality/Condition: "${quality}"
         
         Return ONLY a JSON object in the following format:
         {
