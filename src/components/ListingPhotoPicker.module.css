@@ -175,10 +175,116 @@
     font-weight: 700;
 }
 
-.descriptionContainer p {
+.descriptionInput {
+    width: 100%;
+    min-height: 100px;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-family: inherit;
+    /* Use the same font as the rest of the app */
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #374151;
+    resize: vertical;
+    margin-bottom: 1rem;
+    transition: border-color 0.2s;
+}
+
+.descriptionInput:focus {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* Edit mode and action buttons */
+.descriptionContainer {
+    position: relative;
+    padding-bottom: 2.5rem;
+    /* Make room for the pencil icon */
+}
+
+/* When in edit mode, we might want less padding or different layout, but standard is fine */
+
+.descriptionParagraph {
     line-height: 1.6;
     color: #374151;
     white-space: pre-wrap;
+    margin: 0;
+}
+
+.editButton {
+    position: absolute;
+    bottom: 0.75rem;
+    right: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #f3f4f6;
+    border: 1px solid #d1d5db;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.editButton:hover {
+    background-color: #e5e7eb;
+    color: #374151;
+}
+
+.actionButtons {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
+.saveBtn,
+.cancelBtnEdit {
+    padding: 0.6rem 1.25rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s;
+}
+
+.saveBtn {
+    background-color: #4f46e5;
+    color: white;
+}
+
+.saveBtn:hover {
+    background-color: #4338ca;
+}
+
+.saveBtn:disabled {
+    background-color: #a5b4fc;
+    cursor: wait;
+}
+
+.cancelBtnEdit {
+    background-color: transparent;
+    color: #4b5563;
+    border: 1px solid #d1d5db;
+}
+
+.cancelBtnEdit:hover {
+    background-color: #f9fafb;
+    border-color: #9ca3af;
+}
+
+.priceLoader {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #bbf7d0;
+    border-top-color: #15803d;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
 }
 
 .itemSelectionContainer {
@@ -259,13 +365,17 @@
     text-decoration: none;
 }
 
-.suggestedPrice {
-    margin-top: 1rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #059669;
-    /* Green color for money/price */
+.suggestedPriceContainer {
+    background-color: #f0fdf4;
+    padding: 1.5rem;
+    border-radius: 12px;
+    width: 100%;
+    border: 1px solid #bbf7d0;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
+    color: #15803d;
+    font-weight: 600;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
