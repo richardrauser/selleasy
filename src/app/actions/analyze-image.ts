@@ -1,23 +1,15 @@
 'use server';
 
-import { GoogleGenerativeAI } from "@google/generative-ai";
-
-const GEMINI_MODELS = {
-    PRO: "gemini-3-pro-preview",
-    FLASH: "gemini-3-flash-preview"
-}
-
+import { getGeminiModel, GEMINI_MODELS } from "@/lib/gemini";
 
 export async function analyzeImage(imageBase64: string, mimeType: string) {
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-        console.error("GEMINI_API_KEY is not set in environment variables.");
+    const model = getGeminiModel();
+
+    if (!model) {
         return { success: false, error: "Server configuration error: API key missing." };
     }
 
     try {
-        const genAI = new GoogleGenerativeAI(apiKey);
-        const model = genAI.getGenerativeModel({ model: GEMINI_MODELS.FLASH });
 
         const prompt = `
         Analyze the image and identify the distinct items present.
@@ -30,6 +22,7 @@ export async function analyzeImage(imageBase64: string, mimeType: string) {
                     "confidence": 0.95,
                     "title": "Suggested Title for this item",
                     "description": "Detailed description for this specific item, suitable for a sales listing.",
+                    "quality": "Assessment of item condition (e.g. New, Good, Fair)",
                     "suggestedPrice": "Suggested resale price (e.g. $50 - $75)"
                 },
                 ...

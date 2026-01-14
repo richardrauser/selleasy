@@ -170,15 +170,196 @@
 .descriptionContainer h3 {
     margin-top: 0;
     margin-bottom: 0.75rem;
-    font-size: 1.25rem;
+    font-size: 1.0rem;
     color: #111827;
     font-weight: 700;
 }
 
-.descriptionContainer p {
+/* Edit mode and action buttons */
+.descriptionContainer {
+    position: relative;
+    padding-bottom: 2.5rem;
+    /* Make room for the pencil icon */
+}
+
+.editForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.titleInput,
+.qualityInput,
+.descriptionInput {
+    width: calc(100% - 0.5rem);
+    margin-left: 0.5rem;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: normal;
+    color: #111827;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.descriptionInput {
+    line-height: 1.6;
+    min-height: 100px;
+    resize: vertical;
+}
+
+.titleInput:focus,
+.qualityInput:focus,
+.descriptionInput:focus {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.qualityInput {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+}
+
+.readOnlyContent {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.readOnlyField {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.itemTitle {
+    margin: 0;
+    margin-left: 0.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.descriptionParagraph {
     line-height: 1.6;
     color: #374151;
     white-space: pre-wrap;
+    margin: 0;
+    margin-left: 0.5rem;
+    font-size: 1rem;
+}
+
+.qualityValue {
+    font-size: 1rem;
+    color: #111827;
+    margin: 0;
+    margin-left: 0.5rem;
+}
+
+.descriptionInput:focus {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* Edit mode and action buttons */
+
+
+.editButton {
+    position: absolute;
+    bottom: 0.75rem;
+    right: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #f3f4f6;
+    border: 1px solid #d1d5db;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.editButton:hover {
+    background-color: #e5e7eb;
+    color: #374151;
+}
+
+.actionButtons {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
+.saveBtn,
+.cancelBtnEdit {
+    padding: 0.6rem 1.25rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s;
+}
+
+.saveBtn {
+    background-color: #4f46e5;
+    color: white;
+}
+
+.saveBtn:hover {
+    background-color: #4338ca;
+}
+
+.saveBtn:disabled {
+    background-color: #a5b4fc;
+    cursor: wait;
+}
+
+.cancelBtnEdit {
+    background-color: transparent;
+    color: #4b5563;
+    border: 1px solid #d1d5db;
+}
+
+.cancelBtnEdit:hover {
+    background-color: #f9fafb;
+    border-color: #9ca3af;
+}
+
+.priceLoader {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #bbf7d0;
+    border-top-color: #15803d;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
 }
 
 .itemSelectionContainer {
@@ -259,13 +440,17 @@
     text-decoration: none;
 }
 
-.suggestedPrice {
-    margin-top: 1rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #059669;
-    /* Green color for money/price */
+.suggestedPriceContainer {
+    background-color: #f0fdf4;
+    padding: 1.5rem;
+    border-radius: 12px;
+    width: 100%;
+    border: 1px solid #bbf7d0;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
+    color: #15803d;
+    font-weight: 600;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
