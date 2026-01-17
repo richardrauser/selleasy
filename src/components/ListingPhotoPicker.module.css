@@ -454,3 +454,23 @@
     font-size: 1.1rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
+.showMoreBtn {
+    display: block;
+    width: 100%;
+    margin-top: 1rem;
+    DI
+padding: 0.5rem;
+    background: none;
+    border: none;
+    color: #4f46e5;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+}
+
+.showMoreBtn:hover {
+    color: #4338ca;
+    text-decoration: underline;
+}
