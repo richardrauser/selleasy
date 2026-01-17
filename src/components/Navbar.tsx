@@ -25,6 +25,14 @@ export default function Navbar() {
                 </li>
                 <li>
                     <Link
+                        href="/listings"
+                        className={isActive('/listings') ? `${styles.navLink} ${styles.navLinkActive}` : styles.navLink}
+                    >
+                        Listings
+                    </Link>
+                </li>
+                <li>
+                    <Link
                         href="/listings/new"
                         className={isActive('/listings/new') ? `${styles.navLink} ${styles.navLinkActive}` : styles.navLink}
                     >

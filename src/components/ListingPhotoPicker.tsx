@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { analyzeImage } from '@/app/actions/analyze-image';
 import { suggestPriceFromDescription } from '@/app/actions/suggest-price';
+import { createListing } from '@/app/actions/create-listing';
 import styles from './ListingPhotoPicker.module.css';
 
 export default function ListingPhotoPicker() {
@@ -26,6 +27,11 @@ export default function ListingPhotoPicker() {
     const [tempTitle, setTempTitle] = useState<string>('');
     const [tempDescription, setTempDescription] = useState<string>('');
     const [tempQuality, setTempQuality] = useState<string>('');
+
+
+
+    const [chosenPrice, setChosenPrice] = useState<string>('');
+    const [isPublishing, setIsPublishing] = useState(false);
 
     const fileInputRef = useRef<HTMLInputElement>(null);
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -215,6 +221,62 @@ export default function ListingPhotoPicker() {
             ));
         }
         setIsUpdatingPrice(false);
+    };
+
+    // Calculate default chosen price when suggested price changes
+    useEffect(() => {
+        if (selectedItem?.suggestedPrice) {
+            const priceStr = selectedItem.suggestedPrice;
+            // Extract all numbers (including decimals)
+            const matches = priceStr.match(/(\d+\.?\d*)/g);
+
+            if (matches && matches.length > 0) {
+                const prices = matches.map(Number);
+                let defaultPrice = '';
+
+                if (prices.length >= 2) {
+                    const min = Math.min(...prices);
+                    const max = Math.max(...prices);
+                    const avg = (min + max) / 2;
+                    // Format to generic number string, try to keep it clean (e.g. 125, not 125.00 if unnecessary, but 125.50 if needed)
+                    defaultPrice = avg % 1 === 0 ? avg.toString() : avg.toFixed(2);
+                } else if (prices.length === 1) {
+                    defaultPrice = prices[0].toString();
+                }
+
+                setChosenPrice(defaultPrice);
+            } else {
+                setChosenPrice('');
+            }
+        }
+    }, [selectedItem?.suggestedPrice]);
+
+    const handlePublish = async () => {
+        if (!selectedItemId) return;
+
+        setIsPublishing(true);
+        const thisItem = items.find(i => i.id === selectedItemId);
+
+        if (!thisItem) {
+            setIsPublishing(false);
+            return;
+        }
+
+        const result = await createListing({
+            title: localTitle,
+            description: localDescription,
+            quality: localQuality,
+            suggestedPrice: thisItem.suggestedPrice || '',
+            chosenPrice: chosenPrice
+        });
+
+        if (result.success) {
+            alert("Listing published successfully!");
+            // Optionally reset or redirect
+        } else {
+            alert("Failed to publish listing: " + (result.error || "Unknown error"));
+        }
+        setIsPublishing(false);
     };
 
     return (
@@ -458,6 +520,34 @@ export default function ListingPhotoPicker() {
                     ) : (
                         selectedItem.suggestedPrice
                     )}
+                </div>
+            )}
+
+            {selectedItem && selectedItem.suggestedPrice && !loading && !isCameraOpen && (
+                <div className={styles.chosenPriceContainer}>
+                    <label className={styles.chosenPriceLabel}>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                        Your chosen sale price
+                    </label>
+                    <input
+                        type="number"
+                        className={styles.chosenPriceInput}
+                        value={chosenPrice}
+                        onChange={(e) => setChosenPrice(e.target.value)}
+                        placeholder="0.00"
+                        step="0.01"
+                    />
+
+                    <button
+                        className={styles.publishBtn}
+                        onClick={handlePublish}
+                        disabled={isPublishing}
+                    >
+                        {isPublishing ? 'Publishing...' : 'Publish Listing'}
+                    </button>
                 </div>
             )}
         </div>
