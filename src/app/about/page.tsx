@@ -9,7 +9,7 @@ export default function AboutPage() {
         <main className={styles.pageContainer}>
             <div className={styles.contentWrapper}>
                 <h1 className={styles.title}>SellEasy</h1>
-                <p className={styles.description}>The easiest way to sell your stuff.</p>
+                <p className={styles.description}>The easiest way to sell your stuff!</p>
 
                 <div className={styles.infoGrid}>
                     <div className={styles.infoItem}>
