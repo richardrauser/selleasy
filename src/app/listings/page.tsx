@@ -41,6 +41,11 @@ export default async function ListingsPage({
                         {listings.map((listing) => (
                             <Link key={listing.id} href={`/listings/${listing.id}`} className={styles.cardLink}>
                                 <div className={styles.card}>
+                                    {listing.imageBase64 && (
+                                        <div className={styles.cardImageContainer}>
+                                            <img src={listing.imageBase64} alt={listing.title} className={styles.cardImage} />
+                                        </div>
+                                    )}
                                     <div className={styles.cardHeader}>
                                         <h3 className={styles.itemTitle}>{listing.title}</h3>
                                         <span className={styles.qualityBadge}>{listing.quality}</span>

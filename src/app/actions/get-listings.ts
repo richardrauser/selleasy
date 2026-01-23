@@ -11,6 +11,7 @@ export interface Listing {
     chosenPrice: string;
     createdAt?: Date;
     status: string;
+    imageBase64?: string;
 }
 
 const ITEMS_PER_PAGE = 10;
@@ -40,7 +41,8 @@ export async function getListings(page: number = 1) {
                 suggestedPrice: data.suggestedPrice,
                 chosenPrice: data.chosenPrice,
                 createdAt: data.createdAt?.toDate(), // Convert Firestore Timestamp to Date
-                status: data.status
+                status: data.status,
+                imageBase64: data.imageBase64
             });
         });
 

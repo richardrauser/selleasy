@@ -8,6 +8,7 @@ interface CreateListingParams {
     quality: string;
     suggestedPrice: string;
     chosenPrice: string;
+    imageBase64?: string;
 }
 
 export async function createListing(data: CreateListingParams) {

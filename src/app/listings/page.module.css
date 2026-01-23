@@ -41,6 +41,24 @@
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
 
+.cardImageContainer {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-bottom: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cardImage {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 0.5rem;
+}
+
 .cardHeader {
     display: flex;
     justify-content: space-between;

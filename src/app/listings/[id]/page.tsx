@@ -39,6 +39,11 @@ export default async function ListingDetailsPage({
             </Link>
 
             <article className={styles.detailsCard}>
+                {listing.imageBase64 && (
+                    <div className={styles.imageContainer}>
+                        <img src={listing.imageBase64} alt={listing.title} className={styles.listingImage} />
+                    </div>
+                )}
                 <header className={styles.header}>
                     <h1 className={styles.title}>{listing.title}</h1>
                     <div className={styles.meta}>

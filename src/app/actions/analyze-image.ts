@@ -20,6 +20,7 @@ export async function analyzeImage(imageBase64: string, mimeType: string) {
                     "id": "1",
                     "name": "Short item name",
                     "confidence": 0.95,
+                    "boundingBox": [0.1, 0.1, 0.5, 0.5], // [ymin, xmin, ymax, xmax] normalized 0-1
                     "title": "Suggested Title for this item",
                     "description": "Detailed description for this specific item, suitable for a sales listing.",
                     "quality": "Assessment of item condition (e.g. New, Good, Fair)",
@@ -30,6 +31,7 @@ export async function analyzeImage(imageBase64: string, mimeType: string) {
         }
         Order the "items" array from highest confidence (probability of being the main subject) to lowest.
         Ensure the response is valid JSON without any markdown formatting.
+        For boundingBox, provide the bounding box of the item as [ymin, xmin, ymax, xmax] where the values are relative to the image size (0.0 to 1.0).
         `;
 
         // base64 definition was removed in previous step, adding it back

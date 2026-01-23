@@ -541,3 +541,32 @@
     transform: none;
     box-shadow: none;
 }
+
+.croppedImageContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px dashed #d1d5db;
+}
+
+.croppedImageLabel {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    align-self: flex-start;
+}
+
+.croppedImage {
+    max-width: 100%;
+    max-height: 250px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}

@@ -32,6 +32,7 @@ export default function ListingPhotoPicker() {
 
     const [chosenPrice, setChosenPrice] = useState<string>('');
     const [isPublishing, setIsPublishing] = useState(false);
+    const [croppedImageSrc, setCroppedImageSrc] = useState<string | null>(null);
 
     const fileInputRef = useRef<HTMLInputElement>(null);
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -251,6 +252,40 @@ export default function ListingPhotoPicker() {
         }
     }, [selectedItem?.suggestedPrice]);
 
+    useEffect(() => {
+        const item = items.find(i => i.id === selectedItemId);
+        if (item && item.boundingBox && imageSrc) {
+            generateCroppedImage(imageSrc, item.boundingBox);
+        } else {
+            setCroppedImageSrc(null);
+        }
+    }, [selectedItemId, items, imageSrc]);
+
+    const generateCroppedImage = (base64: string, box: number[]) => {
+        const img = new Image();
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const [ymin, xmin, ymax, xmax] = box;
+
+            const startX = xmin * img.width;
+            const startY = ymin * img.height;
+            const width = (xmax - xmin) * img.width;
+            const height = (ymax - ymin) * img.height;
+
+            if (width <= 0 || height <= 0) return;
+
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            if (ctx) {
+                // sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight
+                ctx.drawImage(img, startX, startY, width, height, 0, 0, width, height);
+                setCroppedImageSrc(canvas.toDataURL());
+            }
+        };
+        img.src = base64;
+    };
+
     const handlePublish = async () => {
         if (!selectedItemId) return;
 
@@ -267,7 +302,8 @@ export default function ListingPhotoPicker() {
             description: localDescription,
             quality: localQuality,
             suggestedPrice: thisItem.suggestedPrice || '',
-            chosenPrice: chosenPrice
+            chosenPrice: chosenPrice,
+            imageBase64: croppedImageSrc || undefined
         });
 
         if (result.success) {
@@ -403,6 +439,12 @@ export default function ListingPhotoPicker() {
             {selectedItem && !loading && !isCameraOpen && (
                 <div className={styles.descriptionContainer}>
                     <div className={styles.descriptionContainer}>
+                        {croppedImageSrc && (
+                            <div className={styles.croppedImageContainer}>
+                                <span className={styles.croppedImageLabel}>Selected Item</span>
+                                <img src={croppedImageSrc} alt="Selected item crop" className={styles.croppedImage} />
+                            </div>
+                        )}
                         {isEditingDescription ? (
                             <div className={styles.editForm}>
                                 <div className={styles.formGroup}>

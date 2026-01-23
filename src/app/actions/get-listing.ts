@@ -24,7 +24,8 @@ export async function getListing(id: string) {
             suggestedPrice: data.suggestedPrice,
             chosenPrice: data.chosenPrice,
             createdAt: data.createdAt?.toDate(),
-            status: data.status
+            status: data.status,
+            imageBase64: data.imageBase64
         };
 
         return { success: true, data: listing };
