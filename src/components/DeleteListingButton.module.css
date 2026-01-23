@@ -1,0 +1,39 @@
+.deleteBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #fee2e2;
+    color: #ef4444;
+    border: 1px solid #fca5a5;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+}
+
+.deleteBtn:hover {
+    background-color: #fecaca;
+    border-color: #f87171;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(239, 68, 68, 0.1);
+}
+
+.deleteBtn:active {
+    transform: translateY(0);
+}
+
+.deleteBtn:disabled {
+    opacity: 0.6;
+    cursor: wait;
+    transform: none;
+}
+
+.iconOnly {
+    padding: 0.5rem;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    justify-content: center;
+}

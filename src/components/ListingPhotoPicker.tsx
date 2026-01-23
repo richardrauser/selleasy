@@ -5,6 +5,7 @@ import { analyzeImage } from '@/app/actions/analyze-image';
 import { suggestPriceFromDescription } from '@/app/actions/suggest-price';
 import { createListing } from '@/app/actions/create-listing';
 import styles from './ListingPhotoPicker.module.css';
+import ConfirmationModal from './ConfirmationModal';
 
 export default function ListingPhotoPicker() {
     const [imageSrc, setImageSrc] = useState<string | null>(null);
@@ -15,6 +16,7 @@ export default function ListingPhotoPicker() {
     const [items, setItems] = useState<any[]>([]);
     const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
     const [showAllItems, setShowAllItems] = useState(false);
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
 
     // New state for editable fields
     const [localTitle, setLocalTitle] = useState<string>('');
@@ -307,8 +309,7 @@ export default function ListingPhotoPicker() {
         });
 
         if (result.success) {
-            alert("Listing published successfully!");
-            // Optionally reset or redirect
+            setShowSuccessModal(true);
         } else {
             alert("Failed to publish listing: " + (result.error || "Unknown error"));
         }
@@ -592,6 +593,23 @@ export default function ListingPhotoPicker() {
                     </button>
                 </div>
             )}
+
+            <ConfirmationModal
+                isOpen={showSuccessModal}
+                title="Listing Published!"
+                message="Your listing has been successfully published."
+                type="success"
+                confirmLabel="View Listings"
+                cancelLabel="Create Another"
+                onConfirm={() => {
+                    // Redirect to listings page
+                    window.location.href = '/listings';
+                }}
+                onCancel={() => {
+                    // Reset to add another (reload the page to clear state efficiently or reset manually)
+                    window.location.reload();
+                }}
+            />
         </div>
     );
 }

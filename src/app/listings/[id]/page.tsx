@@ -2,6 +2,7 @@ import { getListing } from "@/app/actions/get-listing";
 import Link from "next/link";
 import styles from "./page.module.css";
 import { notFound } from "next/navigation";
+import DeleteListingButton from "@/components/DeleteListingButton";
 
 export default async function ListingDetailsPage({
     params,
@@ -45,7 +46,10 @@ export default async function ListingDetailsPage({
                     </div>
                 )}
                 <header className={styles.header}>
-                    <h1 className={styles.title}>{listing.title}</h1>
+                    <div className={styles.headerTop}>
+                        <h1 className={styles.title}>{listing.title}</h1>
+                        <DeleteListingButton listingId={listing.id} redirectAfterDelete={true} />
+                    </div>
                     <div className={styles.meta}>
                         <span className={styles.qualityBadge}>{listing.quality}</span>
                         <span className={`${styles.statusBadge} ${styles[`status-${listing.status}`]}`}>
@@ -68,7 +72,7 @@ export default async function ListingDetailsPage({
                     </div>
 
                     <div className={styles.priceItem}>
-                        <span className={styles.priceLabel}>Your Price</span>
+                        <span className={styles.priceLabel}>Price</span>
                         <span className={styles.priceValue}>${listing.chosenPrice}</span>
                     </div>
                 </div>

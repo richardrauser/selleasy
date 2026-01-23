@@ -51,11 +51,20 @@
     border-bottom: 1px solid #eaeaea;
 }
 
+.headerTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
 .title {
     font-size: 2rem;
     font-weight: 700;
-    margin: 0 0 1rem 0;
+    margin: 0;
     color: #111;
+    line-height: 1.2;
 }
 
 .meta {

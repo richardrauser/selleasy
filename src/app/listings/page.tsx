@@ -1,6 +1,7 @@
 import { getListings } from '@/app/actions/get-listings';
 import Link from 'next/link';
 import styles from './page.module.css';
+import DeleteListingButton from '@/components/DeleteListingButton';
 
 // This is a Server Component
 export default async function ListingsPage({
@@ -32,31 +33,36 @@ export default async function ListingsPage({
     return (
         <main className={styles.pageContainer}>
             <header className={styles.header}>
-                <h1 className={styles.title}>Your Listings</h1>
+                <h1 className={styles.title}>Stuff for Sale</h1>
             </header>
 
             {listings && listings.length > 0 ? (
                 <>
                     <div className={styles.grid}>
                         {listings.map((listing) => (
-                            <Link key={listing.id} href={`/listings/${listing.id}`} className={styles.cardLink}>
-                                <div className={styles.card}>
-                                    {listing.imageBase64 && (
-                                        <div className={styles.cardImageContainer}>
+                            <div key={listing.id} className={styles.card}>
+                                {listing.imageBase64 && (
+                                    <div className={styles.cardImageContainer}>
+                                        <Link href={`/listings/${listing.id}`}>
                                             <img src={listing.imageBase64} alt={listing.title} className={styles.cardImage} />
-                                        </div>
-                                    )}
-                                    <div className={styles.cardHeader}>
-                                        <h3 className={styles.itemTitle}>{listing.title}</h3>
-                                        <span className={styles.qualityBadge}>{listing.quality}</span>
+                                        </Link>
                                     </div>
-                                    <p className={styles.description}>{listing.description}</p>
-                                    <div className={styles.priceSection}>
-                                        <span className={styles.priceLabel}>Your Price</span>
-                                        <span className={styles.priceValue}>${listing.chosenPrice}</span>
+                                )}
+                                <div className={styles.cardHeader}>
+                                    <Link href={`/listings/${listing.id}`} className={styles.titleLink}>
+                                        <h3 className={styles.itemTitle}>{listing.title}</h3>
+                                    </Link>
+                                    <div className={styles.headerActions}>
+                                        <span className={styles.qualityBadge}>{listing.quality}</span>
+                                        <DeleteListingButton listingId={listing.id} iconOnly={true} />
                                     </div>
                                 </div>
-                            </Link>
+                                <p className={styles.description}>{listing.description}</p>
+                                <div className={styles.priceSection}>
+                                    <span className={styles.priceLabel}>Your Price</span>
+                                    <span className={styles.priceValue}>${listing.chosenPrice}</span>
+                                </div>
+                            </div>
                         ))}
                     </div>
 
