@@ -170,3 +170,111 @@
     color: #666;
     margin-bottom: 2rem;
 }
+
+/* Edit Mode Styles */
+.editBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: transparent;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #4b5563;
+}
+
+.editBtn:hover {
+    background-color: #f3f4f6;
+    border-color: #9ca3af;
+}
+
+.titleInput {
+    font-size: 2rem;
+    font-weight: 700;
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+}
+
+.descriptionInput {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.6;
+    resize: vertical;
+}
+
+.qualityInput,
+.priceInput {
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.editActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #eaeaea;
+}
+
+.footerActions {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #eaeaea;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.saveBtn {
+    background-color: #4f46e5;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.saveBtn:hover {
+    background-color: #4338ca;
+}
+
+.cancelBtn {
+    background-color: white;
+    color: #374151;
+    border: 1px solid #d1d5db;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.cancelBtn:hover {
+    background-color: #f9fafb;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #6b7280;
+    font-weight: 600;
+}

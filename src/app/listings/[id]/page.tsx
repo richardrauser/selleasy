@@ -2,7 +2,7 @@ import { getListing } from "@/app/actions/get-listing";
 import Link from "next/link";
 import styles from "./page.module.css";
 import { notFound } from "next/navigation";
-import DeleteListingButton from "@/components/DeleteListingButton";
+import ListingDetails from "@/components/ListingDetails";
 
 export default async function ListingDetailsPage({
     params,
@@ -39,44 +39,7 @@ export default async function ListingDetailsPage({
                 ← Back to Listings
             </Link>
 
-            <article className={styles.detailsCard}>
-                {listing.imageBase64 && (
-                    <div className={styles.imageContainer}>
-                        <img src={listing.imageBase64} alt={listing.title} className={styles.listingImage} />
-                    </div>
-                )}
-                <header className={styles.header}>
-                    <div className={styles.headerTop}>
-                        <h1 className={styles.title}>{listing.title}</h1>
-                        <DeleteListingButton listingId={listing.id} redirectAfterDelete={true} />
-                    </div>
-                    <div className={styles.meta}>
-                        <span className={styles.qualityBadge}>{listing.quality}</span>
-                        <span className={`${styles.statusBadge} ${styles[`status-${listing.status}`]}`}>
-                            {listing.status}
-                        </span>
-                    </div>
-                </header>
-
-                <div className={styles.section}>
-                    <h3 className={styles.sectionTitle}>Description</h3>
-                    <p className={styles.description}>{listing.description}</p>
-                </div>
-
-                <div className={styles.priceGrid}>
-                    <div className={styles.priceItem}>
-                        <span className={styles.priceLabel}>Suggested Price</span>
-                        <span className={`${styles.priceValue} ${styles.suggested}`}>
-                            ${listing.suggestedPrice}
-                        </span>
-                    </div>
-
-                    <div className={styles.priceItem}>
-                        <span className={styles.priceLabel}>Price</span>
-                        <span className={styles.priceValue}>${listing.chosenPrice}</span>
-                    </div>
-                </div>
-            </article>
+            <ListingDetails listing={listing} />
         </main>
     );
 }

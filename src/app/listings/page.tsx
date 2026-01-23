@@ -40,29 +40,26 @@ export default async function ListingsPage({
                 <>
                     <div className={styles.grid}>
                         {listings.map((listing) => (
-                            <div key={listing.id} className={styles.card}>
-                                {listing.imageBase64 && (
-                                    <div className={styles.cardImageContainer}>
-                                        <Link href={`/listings/${listing.id}`}>
+                            <Link key={listing.id} href={`/listings/${listing.id}`} className={styles.cardLink}>
+                                <div className={styles.card}>
+                                    {listing.imageBase64 && (
+                                        <div className={styles.cardImageContainer}>
                                             <img src={listing.imageBase64} alt={listing.title} className={styles.cardImage} />
-                                        </Link>
-                                    </div>
-                                )}
-                                <div className={styles.cardHeader}>
-                                    <Link href={`/listings/${listing.id}`} className={styles.titleLink}>
+                                        </div>
+                                    )}
+                                    <div className={styles.cardHeader}>
                                         <h3 className={styles.itemTitle}>{listing.title}</h3>
-                                    </Link>
-                                    <div className={styles.headerActions}>
-                                        <span className={styles.qualityBadge}>{listing.quality}</span>
-                                        <DeleteListingButton listingId={listing.id} iconOnly={true} />
+                                        <div className={styles.headerActions}>
+                                            <span className={styles.qualityBadge}>{listing.quality}</span>
+                                        </div>
+                                    </div>
+                                    <p className={styles.description}>{listing.description}</p>
+                                    <div className={styles.priceSection}>
+                                        <span className={styles.priceLabel}>Price</span>
+                                        <span className={styles.priceValue}>${listing.chosenPrice}</span>
                                     </div>
                                 </div>
-                                <p className={styles.description}>{listing.description}</p>
-                                <div className={styles.priceSection}>
-                                    <span className={styles.priceLabel}>Your Price</span>
-                                    <span className={styles.priceValue}>${listing.chosenPrice}</span>
-                                </div>
-                            </div>
+                            </Link>
                         ))}
                     </div>
 
