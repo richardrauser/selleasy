@@ -39,17 +39,19 @@ export default async function ListingsPage({
                 <>
                     <div className={styles.grid}>
                         {listings.map((listing) => (
-                            <div key={listing.id} className={styles.card}>
-                                <div className={styles.cardHeader}>
-                                    <h3 className={styles.itemTitle}>{listing.title}</h3>
-                                    <span className={styles.qualityBadge}>{listing.quality}</span>
+                            <Link key={listing.id} href={`/listings/${listing.id}`} className={styles.cardLink}>
+                                <div className={styles.card}>
+                                    <div className={styles.cardHeader}>
+                                        <h3 className={styles.itemTitle}>{listing.title}</h3>
+                                        <span className={styles.qualityBadge}>{listing.quality}</span>
+                                    </div>
+                                    <p className={styles.description}>{listing.description}</p>
+                                    <div className={styles.priceSection}>
+                                        <span className={styles.priceLabel}>Your Price</span>
+                                        <span className={styles.priceValue}>${listing.chosenPrice}</span>
+                                    </div>
                                 </div>
-                                <p className={styles.description}>{listing.description}</p>
-                                <div className={styles.priceSection}>
-                                    <span className={styles.priceLabel}>Your Price</span>
-                                    <span className={styles.priceValue}>${listing.chosenPrice}</span>
-                                </div>
-                            </div>
+                            </Link>
                         ))}
                     </div>
 
