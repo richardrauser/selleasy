@@ -587,7 +587,7 @@ export default function ListingPhotoPicker() {
                     <button
                         className={styles.publishBtn}
                         onClick={handlePublish}
-                        disabled={isPublishing}
+                        disabled={isPublishing || isUpdatingPrice}
                     >
                         {isPublishing ? 'Publishing...' : 'Publish Listing'}
                     </button>

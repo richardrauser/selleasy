@@ -33,6 +33,21 @@
 .subtitle {
     font-size: 1.1rem;
     color: #6b7280;
+    text-align: left;
+    /* Align text left for better readability of the list */
+    display: inline-block;
+    /* Center the block itself but keep content left aligned if needed, or just let it flow */
+    margin: 0 auto;
+}
+
+.featuresList {
+    margin: 0.5rem 0 0 0;
+    padding-left: 3rem;
+    text-align: left;
+}
+
+.featuresList li {
+    margin-bottom: 0.25rem;
 }
 
 .loadingPlaceholder {

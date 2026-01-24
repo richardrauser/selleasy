@@ -12,7 +12,7 @@ export default function Navbar() {
     return (
         <nav className={styles.navbar}>
             <Link href="/" className={styles.logo}>
-                SellEasy
+                SellEasy.ai
             </Link>
             <ul className={styles.navLinks}>
                 <li>
