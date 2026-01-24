@@ -88,7 +88,7 @@
     width: 100%;
     height: auto;
     display: block;
-    transform: scaleX(-1);
+    transform: none;
     /* Mirror effect is usually expected for self-view, though for items standard might be better. Let's stick effectively standard or mirrored? front cam is usually mirrored. Back cam is standard. Let's assume user preference but CSS transform specific to selfie mode. For items, maybe no mirror. */
 }
 
