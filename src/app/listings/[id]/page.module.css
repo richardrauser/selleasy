@@ -236,6 +236,7 @@
     display: flex;
     justify-content: space-between;
     gap: 1rem;
+    align-items: center;
 }
 
 .saveBtn {
@@ -300,4 +301,28 @@
 .actionGroup {
     display: flex;
     gap: 1rem;
+}
+
+.ebayBtn {
+    width: 100%;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background-color: #fff;
+    border: 2px solid #e53e3e;
+    /* Optional border color preference, eBay has colors but simple border is safer */
+    border-color: #e5e7eb;
+    color: #333;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.ebayBtn:hover {
+    background-color: #f9fafb;
+    border-color: #d1d5db;
 }

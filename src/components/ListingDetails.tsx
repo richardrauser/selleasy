@@ -5,6 +5,7 @@ import Link from "next/link";
 import styles from '@/app/listings/[id]/page.module.css'; // Reusing page styles for consistency
 import DeleteListingButton from "@/components/DeleteListingButton";
 import { updateListing } from '@/app/actions/update-listing';
+import { publishToEbay } from "@/app/actions/publish-to-ebay";
 import ConfirmationModal from './ConfirmationModal';
 import { Listing } from '@/app/actions/get-listings';
 
@@ -21,6 +22,7 @@ interface ListingDetailsProps {
 export default function ListingDetails({ listing }: ListingDetailsProps) {
     const [isEditing, setIsEditing] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
+    const [isPublishing, setIsPublishing] = useState(false);
 
     const [formData, setFormData] = useState({
         title: listing.title,
@@ -64,6 +66,18 @@ export default function ListingDetails({ listing }: ListingDetailsProps) {
             quality: listing.quality,
             chosenPrice: listing.chosenPrice
         });
+    };
+
+    const handlePublishToEbay = async () => {
+        setIsPublishing(true);
+        const result = await publishToEbay(listing.id);
+        setIsPublishing(false);
+
+        if (result.success) {
+            alert(`Successfully published to eBay! Item ID: ${result.itemId}`);
+        } else {
+            alert(`Failed to publish to eBay: ${result.error}`);
+        }
     };
 
     return (
@@ -176,28 +190,47 @@ export default function ListingDetails({ listing }: ListingDetailsProps) {
                         </button>
                     </div>
                 ) : (
-                    <div className={styles.footerActions}>
-                        <Link href={`/listings/${listing.id}/buy`} className={styles.buyBtn}>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <circle cx="9" cy="21" r="1"></circle>
-                                <circle cx="20" cy="21" r="1"></circle>
-                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                            </svg>
-                            Buy now!
-                        </Link>
-                        <div className={styles.actionGroup}>
-                            <button
-                                onClick={() => setIsEditing(true)}
-                                className={styles.editBtn}
-                            >
+                    <div>
+                        <div className={styles.footerActions}>
+                            <Link href={`/listings/${listing.id}/buy`} className={styles.buyBtn}>
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    <circle cx="9" cy="21" r="1"></circle>
+                                    <circle cx="20" cy="21" r="1"></circle>
+                                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
                                 </svg>
-                                Edit
-                            </button>
-                            <DeleteListingButton listingId={listing.id} redirectAfterDelete={true} />
+                                Buy now!
+                            </Link>
+                            <div className={styles.actionGroup}>
+                                <button
+                                    onClick={() => setIsEditing(true)}
+                                    className={styles.editBtn}
+                                >
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    </svg>
+                                    Edit
+                                </button>
+                                <DeleteListingButton listingId={listing.id} redirectAfterDelete={true} />
+                            </div>
                         </div>
+
+                        <button
+                            onClick={handlePublishToEbay}
+                            className={styles.ebayBtn}
+                            disabled={isPublishing}
+                            title="Publish to eBay"
+                        >
+                            {isPublishing ? 'Publishing...' : (
+                                <>
+                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                        <path d="M4.63 9.55v4.52h1.68v-3.4h.54c.91 0 1.34.25 1.34.8 0 .5-.4.77-1.15.77H6.7v3.83H5v-2.02h2.1c1.9 0 2.92.83 2.92 2.3 0 1.25-.79 2.05-2.07 2.22l2.36 3.84H8.46l-2-3.48H5.98v3.48H4.29V9.55h.34zm7.62 0h1.8v1.4h.06c.26-.95 1.1-1.52 2.1-1.52.3 0 .55.05.77.13l-.53 1.62c-.2-.1-.45-.14-.7-.14-1.07 0-1.8.84-1.8 2.22v4.8h-1.7V9.55zm5.17 0h1.7v7.6h-1.7V9.55zm-6.3 3.84c0 1.4-.94 2.38-2.3 2.38-.65 0-1.2-.23-1.56-.6v.5h-1.6V6.8h1.6v3.27c.37-.4 1-.68 1.63-.68 1.35 0 2.24 1 2.24 2.4l-.01 1.6zM9.47 11.8c-.5 0-.96.4-96.96 1.05s.45 1.05.95 1.05c.54 0 1-.4 1-1.05s-.44-1.05-1-1.05zm10.7 1.58l-1.66 4.67h-1.8l-1.2-3.42-1.22 3.42H12.5l1.66-4.43-1.5-4.07h1.83l.87 2.8.9-2.8h1.7l-3.3 8.35v.06l1.32-.01z" />
+                                        <text x="12" y="18" fontSize="16" fontWeight="bold" textAnchor="middle">ebay</text>
+                                    </svg>
+                                    <span>Publish to eBay</span>
+                                </>
+                            )}
+                        </button>
                     </div>
                 )
             }
