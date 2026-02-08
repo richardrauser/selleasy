@@ -3,6 +3,8 @@ import Link from "next/link";
 import styles from "./page.module.css";
 import { notFound } from "next/navigation";
 import ListingDetails from "@/components/ListingDetails";
+import ListingMessages from "@/components/ListingMessages";
+import { getMessages } from "@/app/actions/get-messages";
 
 export default async function ListingDetailsPage({
     params,
@@ -12,7 +14,14 @@ export default async function ListingDetailsPage({
     // Await params as required in Next.js 15+
     const { id } = await params;
 
-    const { success, data: listing, error } = await getListing(id);
+    const [listingResult, messagesResult] = await Promise.all([
+        getListing(id),
+        getMessages(id)
+    ]);
+
+    const { success, data: listing, error } = listingResult;
+    // Messages are optional, so if error, just empty array or handle gracefully
+    const messages = messagesResult.success && messagesResult.data ? messagesResult.data : [];
 
     if (!success || !listing) {
         // In a real app, you might distinguish between "not found" (404) and "error" (500)
@@ -40,6 +49,8 @@ export default async function ListingDetailsPage({
             </Link>
 
             <ListingDetails listing={listing} />
+
+            <ListingMessages listingId={listing.id} initialMessages={messages} />
         </main>
     );
 }
