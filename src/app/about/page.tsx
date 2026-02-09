@@ -9,7 +9,7 @@ export default function AboutPage() {
         <main className={styles.pageContainer}>
             <h1 className={styles.title}>About</h1>
             <div className={styles.contentWrapper}>
-                <p className={styles.description}>The easiest way to sell your stuff!</p>
+                <p className={styles.description}>The easiest way to sell your stuff! Let Gemini AI do the heavy lifting. </p>
 
 
 
