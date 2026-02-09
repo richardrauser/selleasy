@@ -16,11 +16,12 @@ export default function AboutPage() {
                 <div className={styles.section}>
                     <h2 className={styles.sectionTitle}>Features</h2>
                     <ul className={styles.featureList}>
-                        <li>📸 AI-powered item recognition from photos</li>
-                        <li>💰 Smart price suggestions based on market data</li>
-                        <li>✨ Automatic description generation</li>
-                        <li>💬 Integrated messaging system with AI assistant</li>
-                        <li>🛍️ Easy listing management and deletion</li>
+                        <li>📸 Gemini powered item recognition</li>
+                        <li>💰 Clever price suggestions from Gemini</li>
+                        <li>✨ Gemini generated product descriptions</li>
+                        <li>💰 Gemini negotiated sales process</li>
+                        <li>💬 Messaging system</li>
+                        <li>🛍️ Easy listing management</li>
                         <li>🛒 One-click eBay publishing integration</li>
                     </ul>
                 </div>

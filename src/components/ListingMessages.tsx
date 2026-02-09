@@ -108,7 +108,7 @@ export default function ListingMessages({ listingId, initialMessages }: ListingM
 
     return (
         <section className={styles.messagesContainer}>
-            <h2 className={styles.title}>Q&A / Messages</h2>
+            <h2 className={styles.title}>Messages</h2>
 
             <div className={styles.messagesList}>
                 {messages.length === 0 ? (

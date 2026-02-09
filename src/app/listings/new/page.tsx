@@ -15,7 +15,7 @@ export default function NewListingPage() {
                 <header className={styles.header}>
                     <h1 className={styles.title}>Create New Listing</h1>
                     <div className={styles.subtitle}>
-                        Snap a photo to automatically:
+                        Snap a photo and Gemini will:
                         <ol className={styles.featuresList}>
                             <li>describe your item</li>
                             <li>assess its quality</li>

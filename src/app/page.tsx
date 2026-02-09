@@ -16,10 +16,10 @@ export default function Home() {
           />
         </div>
         <h1 className={styles.title}>
-          Let <span style={{ color: "var(--secondary)" }}>Google's Gemini AI</span> Sell Your Stuff!
+          Let <span style={{ color: "var(--secondary)" }}>Google Gemini</span> Sell your Secondhand Stuff
         </h1>
         <p className={styles.description}>
-          The easiest way to declutter your life and make money.
+          Gemini will <b>describe your item</b>, <b>assess its quality</b>, <b>suggest a price</b> and even <b>negotiate with buyers!</b>
         </p>
         <Link href="/listings/new">
           <button className={styles.ctaButton}>
