@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Message, addMessage } from '@/app/actions/add-message';
 import { getMessages } from '@/app/actions/get-messages';
 import styles from './ListingMessages.module.css';
+import Link from 'next/link';
 
 interface ListingMessagesProps {
     listingId: string;
@@ -30,15 +31,32 @@ export default function ListingMessages({ listingId, initialMessages }: ListingM
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
-        setIsSubmitting(true);
 
         if (!senderName.trim() || !content.trim()) {
             setError('Name and message are required.');
-            setIsSubmitting(false);
             return;
         }
 
-        const result = await addMessage({ listingId, senderName, content });
+        setIsSubmitting(true);
+
+        // Optimistic update
+        const tempId = `temp-${Date.now()}`;
+        const newMessage: Message = {
+            id: tempId,
+            listingId,
+            senderName,
+            content,
+            createdAt: Date.now()
+        };
+
+        setMessages(prev => [...prev, newMessage]);
+        const msgContent = content;
+        setContent(''); // Clear input immediatey
+
+        // Save name for next time
+        localStorage.setItem('selleasy_username', senderName);
+
+        const result = await addMessage({ listingId, senderName, content: msgContent });
 
         if (result.success) {
             // Fetch updated messages to see AI response
@@ -46,24 +64,14 @@ export default function ListingMessages({ listingId, initialMessages }: ListingM
 
             if (refresh.success && refresh.data) {
                 setMessages(refresh.data);
-            } else {
-                // Fallback optimistic update if refresh fails
-                const newMessage: Message = {
-                    id: result.id!,
-                    listingId,
-                    senderName,
-                    content,
-                    createdAt: Date.now()
-                };
-                setMessages(prev => [...prev, newMessage]);
             }
-
-            setContent('');
-
-            // Save name for next time
-            localStorage.setItem('selleasy_username', senderName);
         } else {
             setError(typeof result.error === 'string' ? result.error : 'Failed to send message');
+            // Revert optimistic update on failure (optional, but good practice specific filtering is harder without real ID, just refresh)
+            const refresh = await getMessages(listingId);
+            if (refresh.success && refresh.data) {
+                setMessages(refresh.data);
+            }
         }
 
         setIsSubmitting(false);
@@ -77,6 +85,25 @@ export default function ListingMessages({ listingId, initialMessages }: ListingM
             hour: 'numeric',
             minute: 'numeric'
         }).format(d);
+    };
+
+    const renderMessageContent = (msg: Message) => {
+        const dealRegex = /\[DEAL_PRICE:\s*([\d.]+)\]/i;
+        const match = msg.content.match(dealRegex);
+
+        if (match) {
+            const price = match[1];
+            const cleanContent = msg.content.replace(dealRegex, '').trim();
+            return (
+                <div>
+                    <p className={styles.messageContent}>{cleanContent}</p>
+                    <Link href={`/listings/${listingId}/buy?price=${price}`} className={styles.buyNowBtn}>
+                        Buy Now for ${price}
+                    </Link>
+                </div>
+            );
+        }
+        return <p className={styles.messageContent}>{msg.content}</p>;
     };
 
     return (
@@ -95,9 +122,16 @@ export default function ListingMessages({ listingId, initialMessages }: ListingM
                                 <span className={styles.senderName}>{msg.senderName}</span>
                                 <span className={styles.messageTime}>{formatDate(msg.createdAt)}</span>
                             </div>
-                            <p className={styles.messageContent}>{msg.content}</p>
+                            {renderMessageContent(msg)}
                         </div>
                     ))
+                )}
+
+                {isSubmitting && (
+                    <div className={styles.aiThinking}>
+                        <div className={styles.spinner}></div>
+                        <span>AI thinking...</span>
+                    </div>
                 )}
             </div>
 

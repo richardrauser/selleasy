@@ -6,10 +6,14 @@ import BuyPageClient from "@/components/BuyPageClient";
 
 export default async function BuyPage({
     params,
+    searchParams,
 }: {
     params: Promise<{ id: string }>;
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
     const { id } = await params;
+    const queryParams = await searchParams;
+    const negotiatedPrice = typeof queryParams.price === 'string' ? queryParams.price : undefined;
 
     const { success, data: listing, error } = await getListing(id);
 
@@ -36,7 +40,7 @@ export default async function BuyPage({
                 ← Back to Listing
             </Link>
 
-            <BuyPageClient listing={listing} />
+            <BuyPageClient listing={listing} negotiatedPrice={negotiatedPrice} />
         </main>
     );
 }

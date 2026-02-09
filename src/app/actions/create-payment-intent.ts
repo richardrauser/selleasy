@@ -5,7 +5,7 @@ import { getListing } from './get-listing';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
-export async function createPaymentIntent(listingId: string) {
+export async function createPaymentIntent(listingId: string, negotiatedPrice?: string) {
     try {
         const listingResult = await getListing(listingId);
 
@@ -15,10 +15,12 @@ export async function createPaymentIntent(listingId: string) {
 
         const listing = listingResult.data;
 
-        // Ensure price is valid
-        const price = parseFloat(listing.chosenPrice);
+        // Use negotiated price if provided, otherwise use original listing price
+        const priceString = negotiatedPrice || listing.chosenPrice;
+        const price = parseFloat(priceString);
+
         if (isNaN(price)) {
-            return { success: false, error: 'Invalid listing price' };
+            return { success: false, error: 'Invalid price' };
         }
 
         const amount = Math.round(price * 100); // Convert to cents
@@ -32,6 +34,9 @@ export async function createPaymentIntent(listingId: string) {
             metadata: {
                 listingId: listing.id,
                 listingTitle: listing.title,
+                originalPrice: listing.chosenPrice,
+                finalPrice: priceString,
+                isNegotiated: negotiatedPrice ? 'true' : 'false'
             },
         });
 

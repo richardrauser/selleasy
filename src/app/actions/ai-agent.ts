@@ -46,6 +46,8 @@ export async function generateAIResponse(listingId: string, userMessage: string,
         - If an offer is too low, politely counter-offer with a price closer to the Asking Price.
         - Be friendly, professional, and concise.
         - Do not start your message with "AI Agent:" or similar. Just speak naturally.
+        - IMPORTANT: If you agree to a price or propose a specific counter-offer that you are ready to sell at, end your message with a special tag: [DEAL_PRICE: amount]. 
+        - Example: "That sounds fair! I can accept $50. [DEAL_PRICE: 50]" or "How about $60? [DEAL_PRICE: 60]". Only use numbers in the tag.
         `;
 
         const chatLayout = `

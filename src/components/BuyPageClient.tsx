@@ -10,15 +10,18 @@ import styles from '@/app/listings/[id]/buy/page.module.css';
 
 interface BuyPageClientProps {
     listing: Listing;
+    negotiatedPrice?: string;
 }
 
-export default function BuyPageClient({ listing }: BuyPageClientProps) {
+export default function BuyPageClient({ listing, negotiatedPrice }: BuyPageClientProps) {
     const [clientSecret, setClientSecret] = useState<string>("");
     const [error, setError] = useState<string | null>(null);
 
+    const displayPrice = negotiatedPrice || listing.chosenPrice;
+
     useEffect(() => {
         const initPayment = async () => {
-            const result = await createPaymentIntent(listing.id);
+            const result = await createPaymentIntent(listing.id, negotiatedPrice);
             if (result.success && result.clientSecret) {
                 setClientSecret(result.clientSecret);
             } else {
@@ -27,7 +30,7 @@ export default function BuyPageClient({ listing }: BuyPageClientProps) {
         };
 
         initPayment();
-    }, [listing.id]);
+    }, [listing.id, negotiatedPrice]);
 
     const appearance = {
         theme: 'stripe' as const,
@@ -52,11 +55,11 @@ export default function BuyPageClient({ listing }: BuyPageClientProps) {
                 <h2 className={styles.summaryTitle}>Order Summary</h2>
                 <div className={styles.summaryItem}>
                     <span>{listing.title}</span>
-                    <span>${listing.chosenPrice}</span>
+                    <span>${displayPrice}</span>
                 </div>
                 <div className={styles.total}>
                     <span>Total</span>
-                    <span>${listing.chosenPrice}</span>
+                    <span>${displayPrice}</span>
                 </div>
             </div>
 
