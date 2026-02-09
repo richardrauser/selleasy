@@ -2,32 +2,33 @@
     min-height: 100vh;
     padding: 2rem;
     background: linear-gradient(to bottom, #f9fafb, #f3f4f6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-family: system-ui, -apple-system, sans-serif;
 }
 
 .contentWrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    /* Keeping the card style for About page specifically, but centering it like the new listing page */
     background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(10px);
     padding: 3rem;
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
-    text-align: center;
-    max-width: 500px;
-    width: 100%;
     border: 1px solid rgba(255, 255, 255, 0.5);
+    text-align: center;
 }
 
 .title {
     font-size: 3rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #111827 0%, #374151 100%);
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    color: transparent;
-    margin-bottom: 0.5rem;
+    text-align: center;
 }
 
 .description {
@@ -69,4 +70,68 @@
     color: #6b7280;
     font-family: monospace;
     font-size: 1.1rem;
+}
+
+.section {
+    margin-top: 2.5rem;
+    text-align: left;
+}
+
+.sectionTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #f3f4f6;
+    padding-bottom: 0.5rem;
+}
+
+.featureList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.featureList li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #4b5563;
+    font-size: 1.05rem;
+}
+
+.techTags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.techTag {
+    background: #eef2ff;
+    color: #4f46e5;
+    padding: 0.4rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 1px solid #c7d2fe;
+}
+
+.creatorText {
+    color: #4b5563;
+    font-size: 1.1rem;
+}
+
+.creatorLink {
+    color: #4f46e5;
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.2s;
+}
+
+.creatorLink:hover {
+    color: #4338ca;
+    text-decoration: underline;
 }

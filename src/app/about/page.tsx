@@ -7,9 +7,43 @@ export default function AboutPage() {
 
     return (
         <main className={styles.pageContainer}>
+            <h1 className={styles.title}>About</h1>
             <div className={styles.contentWrapper}>
-                <h1 className={styles.title}>SellEasy</h1>
                 <p className={styles.description}>The easiest way to sell your stuff!</p>
+
+
+
+                <div className={styles.section}>
+                    <h2 className={styles.sectionTitle}>Features</h2>
+                    <ul className={styles.featureList}>
+                        <li>📸 AI-powered item recognition from photos</li>
+                        <li>💰 Smart price suggestions based on market data</li>
+                        <li>✨ Automatic description generation</li>
+                        <li>💬 Integrated messaging system with AI assistant</li>
+                        <li>🛍️ Easy listing management and deletion</li>
+                        <li>🛒 One-click eBay publishing integration</li>
+                    </ul>
+                </div>
+
+                <div className={styles.section}>
+                    <h2 className={styles.sectionTitle}>Tech Stack</h2>
+                    <div className={styles.techTags}>
+                        <span className={styles.techTag}>Next.js 15</span>
+                        <span className={styles.techTag}>React 19</span>
+                        <span className={styles.techTag}>TypeScript</span>
+                        <span className={styles.techTag}>Firebase</span>
+                        <span className={styles.techTag}>Gemini AI</span>
+                        <span className={styles.techTag}>Google Cloud</span>
+                        <span className={styles.techTag}>Stripe</span>
+                    </div>
+                </div>
+
+                <div className={styles.section}>
+                    <h2 className={styles.sectionTitle}>Created By</h2>
+                    <p className={styles.creatorText}>
+                        Made by <a href="https://x.com/RichardRauser" target="_blank" rel="noopener noreferrer" className={styles.creatorLink}>Richard Rauser</a> in 2026
+                    </p>
+                </div>
 
                 <div className={styles.infoGrid}>
                     <div className={styles.infoItem}>
@@ -19,10 +53,6 @@ export default function AboutPage() {
                     <div className={styles.infoItem}>
                         <span className={styles.label}>Build</span>
                         <span className={styles.value}>{buildNumber}</span>
-                    </div>
-                    <div className={styles.infoItem}>
-                        <span className={styles.label}>Env</span>
-                        <span className={styles.value}>{process.env.NODE_ENV}</span>
                     </div>
                 </div>
             </div>

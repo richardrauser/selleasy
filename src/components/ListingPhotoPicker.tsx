@@ -113,7 +113,12 @@ export default function ListingPhotoPicker() {
         const reader = new FileReader();
         reader.onload = async (event) => {
             const base64 = event.target?.result as string;
+
+            // Replicate actions from capturePhoto
             setImageSrc(base64);
+            setIsCameraOpen(false);
+            stopCameraStream();
+
             setLoading(true);
             setDescription('');
 

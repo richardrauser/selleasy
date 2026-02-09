@@ -8,15 +8,15 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.logo}>
           <Image
-            src="/logo.png"
+            src="/SellEasyLogo.png"
             alt="SellEasy Logo"
-            width={180}
-            height={180}
+            width={300}
+            height={236}
             priority
           />
         </div>
         <h1 className={styles.title}>
-          Get your old stuff sold, <span style={{ color: "var(--secondary)" }}>TODAY!</span>
+          Let <span style={{ color: "var(--secondary)" }}>Google's Gemini AI</span> Sell Your Stuff!
         </h1>
         <p className={styles.description}>
           The easiest way to declutter your life and make money.

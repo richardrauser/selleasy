@@ -21,13 +21,11 @@
 .title {
     font-size: 2.5rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #111827 0%, #374151 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+    -webkit-background-clip: text;
     background-clip: text;
-    color: transparent;
-    /* Fallback/Requirement for background-clip: text */
+    -webkit-text-fill-color: transparent;
 }
 
 .subtitle {

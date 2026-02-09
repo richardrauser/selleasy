@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import styles from './Navbar.module.css';
 
@@ -12,7 +13,14 @@ export default function Navbar() {
     return (
         <nav className={styles.navbar}>
             <Link href="/" className={styles.logo}>
-                SellEasy.ai
+                <Image
+                    src="/SellEasyLogo.png"
+                    alt="SellEasy Logo"
+                    width={32}
+                    height={25}
+                    priority // Small but important for LCP if above fold
+                />
+                <span className={styles.logoText}>SellEasy.ai</span>
             </Link>
             <ul className={styles.navLinks}>
                 <li>

@@ -46,22 +46,22 @@
 }
 
 .ctaButton {
-  background-color: var(--primary);
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: var(--white);
   border: none;
   padding: 1rem 2.5rem;
   font-size: 1.25rem;
   font-weight: 700;
   border-radius: 9999px;
+  /* Keeping pill shape as it fits page design better than 50px fixed */
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 14px 0 rgba(255, 77, 77, 0.39);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
 .ctaButton:hover {
-  background-color: var(--primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px 0 rgba(255, 77, 77, 0.23);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
 }
 
 @keyframes float {

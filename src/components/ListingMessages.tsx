@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Message, addMessage } from '@/app/actions/add-message';
+import { getMessages } from '@/app/actions/get-messages';
 import styles from './ListingMessages.module.css';
 
 interface ListingMessagesProps {
@@ -40,17 +41,23 @@ export default function ListingMessages({ listingId, initialMessages }: ListingM
         const result = await addMessage({ listingId, senderName, content });
 
         if (result.success) {
-            // Optimistically add message or wait for revalidation?
-            // Since we don't have real-time subscriptions yet, we can append it manually.
-            const newMessage: Message = {
-                id: result.id!, // Assumed id is returned
-                listingId,
-                senderName,
-                content,
-                createdAt: Date.now()
-            };
+            // Fetch updated messages to see AI response
+            const refresh = await getMessages(listingId);
 
-            setMessages(prev => [...prev, newMessage]);
+            if (refresh.success && refresh.data) {
+                setMessages(refresh.data);
+            } else {
+                // Fallback optimistic update if refresh fails
+                const newMessage: Message = {
+                    id: result.id!,
+                    listingId,
+                    senderName,
+                    content,
+                    createdAt: Date.now()
+                };
+                setMessages(prev => [...prev, newMessage]);
+            }
+
             setContent('');
 
             // Save name for next time
